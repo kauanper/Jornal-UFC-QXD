@@ -1,4 +1,4 @@
-package com.example.JornalUFC.User;
+package com.example.JornalUFC.modules.user;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -26,7 +26,6 @@ public class User implements UserDetails{
     private long id;
 
     private String username;
-    private String email;
     private String password;
     private UserRoles role;
 
