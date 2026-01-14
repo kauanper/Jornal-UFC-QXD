@@ -14,7 +14,7 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .headers(headers -> headers.frameOptions(frame -> frame.disable())) //permite H2 em iframe
                 .authorizeHttpRequests(auth -> auth
-                        .anyRequest().permitAll() //deixa todas as rotas abertas
+                        .anyRequest().permitAll()
                 );
 
         return http.build();
