@@ -11,11 +11,11 @@ public class TestesController {
 
     @GetMapping()
     public String testeget() {
-        return "prestou";
+        return "prestou para get";
     }
 
     @PostMapping()
     public String testepost() {
-        return "prestou";
+        return "prestou para post";
     }
 }

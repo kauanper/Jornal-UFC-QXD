@@ -11,13 +11,11 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .csrf(csrf -> csrf.disable()) // desabilita CSRF (necessário para H2)
-                .headers(headers -> headers.frameOptions(frame -> frame.disable())) // permite H2 em iframe
+                .csrf(csrf -> csrf.disable())
+                .headers(headers -> headers.frameOptions(frame -> frame.disable())) //permite H2 em iframe
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/h2-console/**").permitAll() // libera H2 console
-                        .anyRequest().authenticated() // resto protegido
-                )
-                .formLogin(org.springframework.security.config.Customizer.withDefaults()); // <-- ajuste aqui
+                        .anyRequest().permitAll() //deixa todas as rotas abertas
+                );
 
         return http.build();
     }
