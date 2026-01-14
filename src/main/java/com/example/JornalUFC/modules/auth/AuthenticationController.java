@@ -14,7 +14,6 @@ public class AuthenticationController {
     @Autowired
     private AuthenticationManager authenticationManager;
 
-    /*
     @PostMapping("/login")
     public ResponseEntity login(@RequestBody @Valid AuthenticationDTO body){
         var usernamePassword = new UsernamePasswordAuthenticationToken(body.username(), body.password());
@@ -23,10 +22,14 @@ public class AuthenticationController {
         return ResponseEntity.ok().build();
     }
 
-    */
+
+
+    /*
 
     @PostMapping("/login")
     public String login(@RequestBody @Valid AuthenticationDTO body){
         return "foi!!";
     }
+
+    */
 }

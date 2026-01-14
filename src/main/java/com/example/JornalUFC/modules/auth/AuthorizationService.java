@@ -13,8 +13,13 @@ public class AuthorizationService implements UserDetailsService {
     @Autowired
     private UserRepository userRepository;
 
-    @Override //fazer a consulta dos user para o spring security
+    @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return userRepository.findByUsername(username);
+        var user = userRepository.findByUsername(username);
+        if(user == null){
+            throw new UsernameNotFoundException("User not found");
+        }
+        return user;
     }
+
 }
