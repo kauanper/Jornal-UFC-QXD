@@ -1,4 +1,4 @@
-package com.example.JornalUFC.domain.User;
+package com.example.JornalUFC.User;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;

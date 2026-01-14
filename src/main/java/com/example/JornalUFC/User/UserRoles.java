@@ -1,4 +1,4 @@
-package com.example.JornalUFC.domain.User;
+package com.example.JornalUFC.User;
 
 public enum UserRoles {
     ADMIN("admin"),
