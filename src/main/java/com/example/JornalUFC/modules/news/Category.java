@@ -1,7 +1,7 @@
 package com.example.JornalUFC.modules.news;
 
 public enum Category {
-    PESQUISA("admin"),
+    PESQUISA("pesquisa"),
     EXTENSAO("extensao"),
     ENSINO("ensino"),
     EVENTOS("eventos"),

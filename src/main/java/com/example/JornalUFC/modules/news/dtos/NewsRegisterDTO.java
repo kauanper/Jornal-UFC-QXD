@@ -2,6 +2,7 @@ package com.example.JornalUFC.modules.news.dtos;
 
 import com.example.JornalUFC.modules.news.Category;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import org.hibernate.validator.constraints.URL;
 
@@ -11,7 +12,7 @@ public class NewsRegisterDTO {
     @Size(min = 5, max = 150)
     private String title;
 
-    @NotBlank(message = "A categoria é obrigatória")
+    @NotNull(message = "A categoria é obrigatória")
     private Category category; // nova categoria adicionada
 
     @NotBlank(message = "A descrição é obrigatória")
