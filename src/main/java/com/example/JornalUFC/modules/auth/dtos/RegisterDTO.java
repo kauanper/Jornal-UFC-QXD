@@ -1,4 +1,4 @@
-package com.example.JornalUFC.modules.auth;
+package com.example.JornalUFC.modules.auth.dtos;
 
 import com.example.JornalUFC.modules.user.UserRoles;
 
