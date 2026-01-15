@@ -3,6 +3,7 @@ package com.example.JornalUFC.config.security;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTCreationException;
+import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.example.JornalUFC.modules.user.User;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -19,7 +20,7 @@ public class TokenService {
 
     public String generateToken(User user) {
         try {
-            Algorithm algorithm = Algorithm.HMAC256("secret");
+            Algorithm algorithm = Algorithm.HMAC256(secret);
             String tokenCreated = JWT.create()
                     .withIssuer("jornal-ufc-qxd")
                     .withSubject(user.getUsername())
@@ -28,6 +29,19 @@ public class TokenService {
             return tokenCreated;
         } catch (JWTCreationException e) {
             throw new RuntimeException("Erro na geração do token", e);
+        }
+    }
+
+    public String verifyToken(String token) {
+        try{
+            Algorithm algorithm = Algorithm.HMAC256(secret);
+            return JWT.require(algorithm)
+                    .withIssuer("jornal-ufc-qxd")
+                    .build()
+                    .verify(token)
+                    .getSubject();
+        } catch (JWTVerificationException e) {
+            return null;
         }
     }
 
