@@ -26,7 +26,7 @@ public class AuthenticationController {
     public ResponseEntity<LoginResponseDTO> login(@RequestBody @Valid AuthenticationDTO body) {
         try {
             var authToken = new UsernamePasswordAuthenticationToken(
-                    body.username(),
+                    body.email(),
                     body.password()
             );
 
