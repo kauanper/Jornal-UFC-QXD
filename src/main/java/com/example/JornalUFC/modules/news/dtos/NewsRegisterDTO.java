@@ -3,17 +3,19 @@ package com.example.JornalUFC.modules.news.dtos;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.URL;
-@Data
+
 public class NewsRegisterDTO {
 
     @NotBlank(message = "O título é obrigatório")
-    @Size(min = 5, max = 150, message = "O título deve ter entre 5 e 150 caracteres")
+    @Size(min = 5, max = 150)
     private String title;
 
     @NotBlank(message = "A descrição é obrigatória")
-    @Size(min = 10, max = 255, message = "A descrição deve ter entre 10 e 255 caracteres")
+    @Size(min = 10, max = 255)
     private String description;
 
     @NotBlank(message = "A URL da imagem é obrigatória")
@@ -21,7 +23,41 @@ public class NewsRegisterDTO {
     private String imagemUrl;
 
     @NotBlank(message = "O texto da notícia é obrigatório")
-    @Size(min = 10, message = "O texto deve ter no mínimo 10 caracteres")
+    @Size(min = 10)
     private String text;
 
+    public NewsRegisterDTO() {}
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getImagemUrl() {
+        return imagemUrl;
+    }
+
+    public void setImagemUrl(String imagemUrl) {
+        this.imagemUrl = imagemUrl;
+    }
+
+    public String getText() {
+        return text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
+    }
 }
+

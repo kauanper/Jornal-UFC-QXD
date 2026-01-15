@@ -32,6 +32,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
                         .requestMatchers("/h2-console/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/testes-exploratorios").hasRole("ADMIN")
+                        .requestMatchers("/error").permitAll()
                         .requestMatchers(HttpMethod.POST, "/news").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )

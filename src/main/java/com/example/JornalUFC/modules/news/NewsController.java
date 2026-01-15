@@ -17,8 +17,12 @@ public class NewsController {
 
 
     @PostMapping
-    public ResponseEntity<?> testValidation(@RequestBody String rawBody) {
-        return ResponseEntity.ok(rawBody);
+    public ResponseEntity<?> testValidation(
+            @RequestBody @Valid NewsRegisterDTO dto,
+            Authentication authentication
+    ) {
+        return ResponseEntity.ok(dto);
     }
+
 
 }
