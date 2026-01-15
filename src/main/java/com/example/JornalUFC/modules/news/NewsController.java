@@ -23,7 +23,7 @@ public class NewsController {
 
     @PreAuthorize("hasRole('EDITOR')")
     @PostMapping
-    public ResponseEntity<?> testValidation(@RequestBody @Valid NewsRegisterDTO dto,
+    public ResponseEntity<?> createNews(@RequestBody @Valid NewsRegisterDTO dto,
                                             Authentication authentication) {
         // Pega o usuario logado e a partir dai, seu id
         User user = (User) authentication.getPrincipal();
