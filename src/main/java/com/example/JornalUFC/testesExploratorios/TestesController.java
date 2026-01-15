@@ -1,9 +1,7 @@
 package com.example.JornalUFC.testesExploratorios;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/testes-exploratorios")
@@ -14,8 +12,15 @@ public class TestesController {
         return "prestou para get";
     }
 
+    @PreAuthorize("hasRole('EDITOR')")
     @PostMapping()
     public String testepost() {
         return "prestou para post";
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @DeleteMapping()
+    public String testedelete() {
+        return "prestou para delete";
     }
 }
