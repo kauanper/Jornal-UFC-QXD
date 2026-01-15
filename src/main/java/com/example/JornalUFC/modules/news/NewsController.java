@@ -1,6 +1,7 @@
 package com.example.JornalUFC.modules.news;
 
 import com.example.JornalUFC.modules.news.dtos.NewsRegisterDTO;
+import com.example.JornalUFC.modules.news.dtos.NewsResponseDTO;
 import com.example.JornalUFC.modules.news.servicies.CraeteNewsUseCase;
 import com.example.JornalUFC.modules.user.User;
 import jakarta.validation.Valid;
@@ -29,9 +30,9 @@ public class NewsController {
         User user = (User) authentication.getPrincipal();
         long userId = user.getId();
 
-        craeteNewsUseCase.execute(userId, dto);
+        NewsResponseDTO responseDTO  = craeteNewsUseCase.execute(userId, dto);
 
-        return ResponseEntity.ok("ID do usuário logado: " + userId);
+        return ResponseEntity.ok(responseDTO );
     }
 
 
