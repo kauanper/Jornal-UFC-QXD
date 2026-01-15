@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 @RequestMapping("/news")
 public class NewsController {
 
-
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
     public ResponseEntity<?> testValidation(
             @RequestBody @Valid NewsRegisterDTO dto,
