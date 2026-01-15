@@ -24,6 +24,7 @@ public class CraeteNewsUseCase {
 
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Usuário não encontrado com id: " + id));
+
         String publisherBy = user.getNickname();
 
         News news = DtoToEntity.transform(newsRegisterDTO, publisherBy);

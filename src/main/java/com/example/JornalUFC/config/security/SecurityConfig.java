@@ -33,6 +33,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
                         .requestMatchers("/h2-console/**").permitAll()
                         .requestMatchers("/testes-exploratorios").permitAll()
+                        .requestMatchers("/news/**").permitAll()
                         .requestMatchers("/error").permitAll()
                         .anyRequest().authenticated()
                 )
