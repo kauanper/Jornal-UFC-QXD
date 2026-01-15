@@ -1,6 +1,5 @@
-package com.example.JornalUFC.config;
+package com.example.JornalUFC.config.security;
 
-import com.example.JornalUFC.modules.auth.AuthorizationService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
