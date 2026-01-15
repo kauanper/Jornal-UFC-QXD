@@ -22,11 +22,9 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     private UserRoles role;
 
-    // 🔹 Construtor vazio (OBRIGATÓRIO para JPA)
     public User() {
     }
 
-    // 🔹 Construtor completo
     public User(long id, String username, String password, UserRoles role) {
         this.id = id;
         this.username = username;
@@ -34,17 +32,13 @@ public class User implements UserDetails {
         this.role = role;
     }
 
-    // 🔹 Construtor de conveniência
     public User(String username, String password, UserRoles role) {
         this.username = username;
         this.password = password;
         this.role = role;
     }
 
-    // ========================
     // UserDetails
-    // ========================
-
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         if (this.role == UserRoles.ADMIN) {
@@ -88,10 +82,7 @@ public class User implements UserDetails {
         return true;
     }
 
-    // ========================
-    // Getters e Setters
-    // ========================
-
+    // Getters e Setters  (tive q fazer manual msm por uns problemaas ai)
     public long getId() {
         return id;
     }
