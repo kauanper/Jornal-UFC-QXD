@@ -1,10 +1,6 @@
 package com.example.JornalUFC.modules.user;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -12,13 +8,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 import java.util.List;
 
+@Entity
 @Table(name = "users")
-@Entity(name = "users")
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-@EqualsAndHashCode(of = "id")
-public class User implements UserDetails{
+public class User implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,24 +18,54 @@ public class User implements UserDetails{
 
     private String username;
     private String password;
+
+    @Enumerated(EnumType.STRING)
     private UserRoles role;
 
+    // 🔹 Construtor vazio (OBRIGATÓRIO para JPA)
+    public User() {
+    }
+
+    // 🔹 Construtor completo
+    public User(long id, String username, String password, UserRoles role) {
+        this.id = id;
+        this.username = username;
+        this.password = password;
+        this.role = role;
+    }
+
+    // 🔹 Construtor de conveniência
     public User(String username, String password, UserRoles role) {
         this.username = username;
         this.password = password;
         this.role = role;
     }
 
+    // ========================
+    // UserDetails
+    // ========================
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        if(this.role == UserRoles.ADMIN){
-            return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"),
-                    new SimpleGrantedAuthority("ROLE_EDITOR"));
+        if (this.role == UserRoles.ADMIN) {
+            return List.of(
+                    new SimpleGrantedAuthority("ROLE_ADMIN"),
+                    new SimpleGrantedAuthority("ROLE_EDITOR")
+            );
         } else if (this.role == UserRoles.EDITOR) {
             return List.of(new SimpleGrantedAuthority("ROLE_EDITOR"));
         }
-
         return List.of();
+    }
+
+    @Override
+    public String getUsername() {
+        return this.username;
+    }
+
+    @Override
+    public String getPassword() {
+        return this.password;
     }
 
     @Override
@@ -66,14 +88,31 @@ public class User implements UserDetails{
         return true;
     }
 
-    @Override
-    public String getUsername() {
-        return this.username;
+    // ========================
+    // Getters e Setters
+    // ========================
+
+    public long getId() {
+        return id;
     }
 
-    @Override
-    public String getPassword() {
-        return this.password;
+    public void setId(long id) {
+        this.id = id;
     }
 
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public UserRoles getRole() {
+        return role;
+    }
+
+    public void setRole(UserRoles role) {
+        this.role = role;
+    }
 }
