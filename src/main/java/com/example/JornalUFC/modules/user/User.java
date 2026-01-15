@@ -16,7 +16,8 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    private String username;
+    private String nickname;
+    private String username; //é o email
     private String password;
 
     @Enumerated(EnumType.STRING)
@@ -25,14 +26,8 @@ public class User implements UserDetails {
     public User() {
     }
 
-    public User(long id, String username, String password, UserRoles role) {
-        this.id = id;
-        this.username = username;
-        this.password = password;
-        this.role = role;
-    }
-
-    public User(String username, String password, UserRoles role) {
+    public User(String nickname ,String username, String password, UserRoles role) {
+        this.nickname = nickname;
         this.username = username;
         this.password = password;
         this.role = role;
