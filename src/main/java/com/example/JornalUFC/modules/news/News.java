@@ -1,13 +1,11 @@
 package com.example.JornalUFC.modules.news;
 
 import jakarta.persistence.*;
-import lombok.Data;
 
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "News")
-@Data
 public class News {
 
     @Id
