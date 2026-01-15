@@ -14,6 +14,10 @@ public class News {
 
     private String title;
     private String description;
+
+    @Enumerated(EnumType.STRING)
+    private Category category;
+
     private String imagemUrl;
     private String text;
     private String publishedBy;

@@ -20,15 +20,11 @@ public class NewsController {
     @PostMapping
     public ResponseEntity<?> testValidation(@RequestBody @Valid NewsRegisterDTO dto,
                                             Authentication authentication) {
-        // Pega o principal (o usuário logado)
+        // Pega o usuario logado e a partir dai, seu id
         User user = (User) authentication.getPrincipal();
-
-        // Agora você tem o ID
         long userId = user.getId();
 
-        System.out.println("ID do usuário logado: " + userId);
-
-        return ResponseEntity.ok(dto);
+        return ResponseEntity.ok("ID do usuário logado: " + userId);
     }
 
 
