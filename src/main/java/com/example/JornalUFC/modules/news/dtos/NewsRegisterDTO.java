@@ -13,7 +13,7 @@ public class NewsRegisterDTO {
     private String title;
 
     @NotNull(message = "A categoria é obrigatória")
-    private Category category; // nova categoria adicionada
+    private Category category;
 
     @NotBlank(message = "A descrição é obrigatória")
     @Size(min = 10, max = 255)
