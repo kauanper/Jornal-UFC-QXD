@@ -9,6 +9,7 @@ import java.util.Optional;
 
 @Repository
 public interface NewsRepository extends JpaRepository<News, Long> {
+
     Optional<News> findById(Long id);
 
     @Query("""
@@ -26,4 +27,6 @@ public interface NewsRepository extends JpaRepository<News, Long> {
             n.publishedDate DESC
     """)
     List<News> findAllOrderedByCategory();
+
+    List<News> findAllByOrderByPublishedDateDesc();
 }

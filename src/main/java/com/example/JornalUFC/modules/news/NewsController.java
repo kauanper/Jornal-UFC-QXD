@@ -32,6 +32,9 @@ public class NewsController {
     @Autowired
     private UpdateNewsUseCase updateNewsUseCase;
 
+    @Autowired
+    private SortByDateUseCase sortByDateUseCase;
+
     @PreAuthorize("hasRole('EDITOR')")
     @PostMapping
     public ResponseEntity<?> createNews(@RequestBody @Valid NewsRegisterDTO dto,
@@ -58,6 +61,13 @@ public class NewsController {
                                         @RequestBody @Valid NewsRegisterDTO dto) {
         NewsResponseDTO responseDTO  = updateNewsUseCase.execute(newsId, dto);
         return ResponseEntity.ok(responseDTO);
+    }
+
+    @PreAuthorize("hasRole('EDITOR')")
+    @GetMapping("/latest")
+    public ResponseEntity<List<NewsResponseDTO>> getAllSortedByDate() {
+        List<NewsResponseDTO> responseDTOList = sortByDateUseCase.execute();
+        return ResponseEntity.ok(responseDTOList);
     }
 
     //rotas publicas----------------------
