@@ -112,6 +112,34 @@ public class GlobalExceptionHandler {
                 .body(error);
     }
 
+    @ExceptionHandler(MethodArgumentTypeMismatchException.class)
+    public ResponseEntity<ErrorResponseDTO> handleMethodArgumentTypeMismatch(
+            MethodArgumentTypeMismatchException ex
+    ) {
+
+        Class<?> requiredType = ex.getRequiredType();
+        String field = ex.getName();
+
+        String message = "Parâmetro inválido";
+
+        if (requiredType != null && requiredType.isEnum()) {
+            String allowedValues = Arrays.toString(requiredType.getEnumConstants());
+
+            message = "Valor inválido para o parâmetro '" + field +
+                    "'. Valores aceitos: " + allowedValues;
+        }
+
+        ErrorResponseDTO error = new ErrorResponseDTO(
+                field,
+                message,
+                HttpStatus.BAD_REQUEST.value(),
+                HttpStatus.BAD_REQUEST.getReasonPhrase()
+        );
+
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .body(error);
+    }
 
 
 
