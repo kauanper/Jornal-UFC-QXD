@@ -4,6 +4,7 @@ import com.example.JornalUFC.modules.user.dtos.RegisterUserDTO;
 import com.example.JornalUFC.modules.user.dtos.ResponseUserDTO;
 import com.example.JornalUFC.modules.user.servicies.CreateUserUseCase;
 import com.example.JornalUFC.modules.user.servicies.GetAllEditorsUseCase;
+import com.example.JornalUFC.modules.user.servicies.GetUserByIdUseCase;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,6 +25,9 @@ public class UserController {
     @Autowired
     private GetAllEditorsUseCase getAllEditorsUseCase;
 
+    @Autowired
+    private GetUserByIdUseCase getUserByIdUseCase;
+
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
     public ResponseEntity<ResponseUserDTO> createUser(@RequestBody @Valid RegisterUserDTO dto) {
@@ -36,5 +40,13 @@ public class UserController {
     public ResponseEntity<List<ResponseUserDTO>> getEditors() {
         List<ResponseUserDTO> editors = getAllEditorsUseCase.execute();
         return ResponseEntity.status(HttpStatus.OK).body(editors);
+    }
+
+    @GetMapping()
+    public ResponseEntity<ResponseUserDTO> getUsers(Authentication authentication) {
+        User user = (User) authentication.getPrincipal();
+        long userId = user.getId();
+        ResponseUserDTO response = getUserByIdUseCase.execute(userId);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 }

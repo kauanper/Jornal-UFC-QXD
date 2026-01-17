@@ -35,9 +35,8 @@ public class NewsController {
     private UpdateNewsUseCase updateNewsUseCase;
 
     @Autowired
-    private SortByDateUseCase sortByDateUseCase;
+    private FilteringUseCase filteringUseCase;
 
-    @Autowired SearchByCategoryUseCase searchByCategoryUseCase;
 
     @PreAuthorize("hasRole('EDITOR')")
     @PostMapping
@@ -68,18 +67,17 @@ public class NewsController {
     }
 
     @PreAuthorize("hasRole('EDITOR')")
-    @GetMapping("/latest")
-    public ResponseEntity<List<NewsResponseDTO>> getAllSortedByDate() {
-        List<NewsResponseDTO> responseDTOList = sortByDateUseCase.execute();
-        return ResponseEntity.ok(responseDTOList);
+    @GetMapping("/orderBy/{order}")
+    public ResponseEntity<List<NewsResponseDTO>> filters(
+            @PathVariable OrderBy order,
+            @RequestParam(required = false) Category category
+    ) {
+        List<NewsResponseDTO> responseDTOs = filteringUseCase.execute(category, order);
+        return ResponseEntity.ok(responseDTOs);
     }
 
-    @PreAuthorize("hasRole('EDITOR')")
-    @GetMapping("/category")
-    public ResponseEntity<List<NewsResponseDTO>> getAllByCategory(@RequestBody @Valid CategoryDTO dto) {
-        List<NewsResponseDTO> responseDTOList = searchByCategoryUseCase.execute(dto);
-        return ResponseEntity.ok(responseDTOList);
-    }
+
+
 
     //rotas publicas------------------------------------------------------
 

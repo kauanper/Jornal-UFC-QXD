@@ -10,6 +10,7 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 import java.util.Arrays;
 import java.util.List;
@@ -110,6 +111,37 @@ public class GlobalExceptionHandler {
                 .status(ex.getStatus())
                 .body(error);
     }
+
+    @ExceptionHandler(MethodArgumentTypeMismatchException.class)
+    public ResponseEntity<ErrorResponseDTO> handleMethodArgumentTypeMismatch(
+            MethodArgumentTypeMismatchException ex
+    ) {
+
+        Class<?> requiredType = ex.getRequiredType();
+        String field = ex.getName();
+
+        String message = "Parâmetro inválido";
+
+        if (requiredType != null && requiredType.isEnum()) {
+            String allowedValues = Arrays.toString(requiredType.getEnumConstants());
+
+            message = "Valor inválido para o parâmetro '" + field +
+                    "'. Valores aceitos: " + allowedValues;
+        }
+
+        ErrorResponseDTO error = new ErrorResponseDTO(
+                field,
+                message,
+                HttpStatus.BAD_REQUEST.value(),
+                HttpStatus.BAD_REQUEST.getReasonPhrase()
+        );
+
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .body(error);
+    }
+
+
 
 
 }
