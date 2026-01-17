@@ -5,6 +5,7 @@ import com.example.JornalUFC.modules.user.UserRepository;
 import com.example.JornalUFC.modules.user.dtos.RegisterUserDTO;
 import com.example.JornalUFC.modules.user.dtos.ResponseUserDTO;
 import com.example.JornalUFC.modules.user.mappers.DtoToEntityUser;
+import com.example.JornalUFC.modules.user.mappers.EntityUserToDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -21,14 +22,9 @@ public class CreateUserUseCase {
     private UserRepository userRepository;
 
     public ResponseUserDTO execute(RegisterUserDTO dto){
-
         //talvez add validação de email
-
-        User user = DtoToEntityUser.tranform(dto);
+        User user = DtoToEntityUser.transform(dto);
         user.setPassword(passwordEncoder.encode(dto.password()));
-
-        userRepository.save(user);
-
-        return null;
+        return EntityUserToDto.transform(userRepository.save(user));
     }
 }

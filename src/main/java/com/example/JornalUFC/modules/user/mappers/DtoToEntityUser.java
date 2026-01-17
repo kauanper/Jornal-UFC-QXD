@@ -8,7 +8,7 @@ public class DtoToEntityUser {
     private DtoToEntityUser() {
     }
 
-    public static User tranform(RegisterUserDTO dto) {
+    public static User transform(RegisterUserDTO dto) {
         return new User(
                 dto.nickname(),
                 dto.username(),
