@@ -1,0 +1,53 @@
+services:
+  journal-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: "journal-api"
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_PROFILES_ACTIVE: staging
+      SPRING_DATASOURCE_URL: ${SPRING_DATASOURCE_URL}
+      SPRING_DATASOURCE_USERNAME: ${SPRING_DATASOURCE_USERNAME}
+      SPRING_DATASOURCE_PASSWORD: ${SPRING_DATASOURCE_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    depends_on:
+      - postgres
+      - pgadmin
+    networks:
+      - journal-network
+
+  postgres:
+    image: postgres:17-alpine
+    container_name: postgres-journal-staging
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - pgdata-staging:/var/lib/postgresql/data
+    networks:
+      - journal-network
+
+  pgadmin:
+    image: dpage/pgadmin4:9.7.0
+    container_name: pgadmin-journal-staging
+    ports:
+      - "5050:80"
+    env_file:
+    - .env
+    depends_on:
+      - postgres
+    networks:
+      - journal-network
+
+networks:
+  journal-network:
+    driver: bridge
+
+volumes:
+  pgdata-staging:
+    driver: local
+  pgadmindata-staging:
+    driver: local
