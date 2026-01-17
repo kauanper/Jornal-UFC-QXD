@@ -11,13 +11,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class GetAllNewsUseCase {
+public class SortByDateUseCase {
 
     @Autowired
     private NewsRepository newsRepository;
 
     public List<NewsResponseDTO> execute(){
-        List<News> newsList = newsRepository.findAllOrderedByCategory();
+
+        List<News> newsList = newsRepository.findAllByOrderByPublishedDateDesc();
         List<NewsResponseDTO> newsResponseDTOList = new ArrayList<>();
         for (News news : newsList) {
             newsResponseDTOList.add(EntityToDto.transform(news));

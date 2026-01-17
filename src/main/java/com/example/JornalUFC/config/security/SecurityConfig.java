@@ -1,5 +1,7 @@
 package com.example.JornalUFC.config.security;
 
+import com.example.JornalUFC.config.security.custonExceptions.CustomAccessDeniedHandler;
+import com.example.JornalUFC.config.security.custonExceptions.CustomAuthenticationEntryPoint;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,6 +23,13 @@ public class SecurityConfig {
     @Autowired
     SecurityFilter filter;
 
+    @Autowired
+    private CustomAccessDeniedHandler accessDeniedHandler;
+
+    @Autowired
+    private CustomAuthenticationEntryPoint authenticationEntryPoint;
+
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
@@ -36,6 +45,10 @@ public class SecurityConfig {
                         .requestMatchers("/news/**").permitAll()
                         .requestMatchers("/error").permitAll()
                         .anyRequest().authenticated()
+                )
+                .exceptionHandling(ex -> ex
+                        .authenticationEntryPoint(authenticationEntryPoint) //401
+                        .accessDeniedHandler(accessDeniedHandler)           //403
                 )
                 .addFilterBefore(filter, UsernamePasswordAuthenticationFilter.class);
 
