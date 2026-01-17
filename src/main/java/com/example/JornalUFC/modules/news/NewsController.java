@@ -7,6 +7,7 @@ import com.example.JornalUFC.modules.news.servicies.*;
 import com.example.JornalUFC.modules.user.User;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
@@ -48,7 +49,7 @@ public class NewsController {
 
         NewsResponseDTO responseDTO  = craeteNewsUseCase.execute(userId, dto);
 
-        return ResponseEntity.ok(responseDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(responseDTO);
     }
 
     @PreAuthorize("hasRole('EDITOR')")
