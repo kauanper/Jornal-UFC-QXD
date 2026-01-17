@@ -39,9 +39,10 @@ public class UserController {
     }
 
     @GetMapping()
-    public ResponseEntity<ResponseUserDTO> getUsers() {
+    public ResponseEntity<ResponseUserDTO> getUsers(Authentication authentication) {
+        User user = (User) authentication.getPrincipal();
+        long userId = user.getId();
 
-        System.out.println("kkkk");
         return null;
     }
 }
