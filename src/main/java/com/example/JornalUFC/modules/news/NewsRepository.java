@@ -2,6 +2,7 @@ package com.example.JornalUFC.modules.news;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -29,4 +30,12 @@ public interface NewsRepository extends JpaRepository<News, Long> {
     List<News> findAllOrderedByCategory();
 
     List<News> findAllByOrderByPublishedDateDesc();
+
+    @Query("""
+        SELECT n
+        FROM News n
+        WHERE n.category = :category
+        ORDER BY n.publishedDate DESC
+    """)
+    List<News> findByCategoryOrderByDateDesc(@Param("category") Category category);
 }
