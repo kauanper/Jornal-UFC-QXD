@@ -5,6 +5,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
 
@@ -16,9 +17,17 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    @Column(nullable = false)
     private String nickname;
+
+    @Column(nullable = false, unique = true)
     private String username; //é o email
+
+    @Column(nullable = false)
     private String password;
+
+    @Column(nullable = false, updatable = false)
+    private LocalDateTime createdAt;
 
     @Enumerated(EnumType.STRING)
     private UserRoles role;
@@ -31,6 +40,7 @@ public class User implements UserDetails {
         this.username = username;
         this.password = password;
         this.role = role;
+        this.createdAt = LocalDateTime.now();
     }
 
     // UserDetails
@@ -80,6 +90,10 @@ public class User implements UserDetails {
     // Getters e Setters  (tive q fazer manual msm por uns problemaas ai)
     public long getId() {
         return id;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return this.createdAt;
     }
 
     public void setId(long id) {
