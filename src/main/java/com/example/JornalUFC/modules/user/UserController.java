@@ -37,4 +37,11 @@ public class UserController {
         List<ResponseUserDTO> editors = getAllEditorsUseCase.execute();
         return ResponseEntity.status(HttpStatus.OK).body(editors);
     }
+
+    @GetMapping()
+    public ResponseEntity<ResponseUserDTO> getUsers() {
+
+        System.out.println("kkkk");
+        return null;
+    }
 }
