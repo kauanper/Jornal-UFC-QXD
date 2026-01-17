@@ -1,5 +1,6 @@
 package com.example.JornalUFC.modules.news;
 
+import com.example.JornalUFC.modules.news.dtos.CategoryDTO;
 import com.example.JornalUFC.modules.news.dtos.NewsRegisterDTO;
 import com.example.JornalUFC.modules.news.dtos.NewsResponseDTO;
 import com.example.JornalUFC.modules.news.servicies.*;
@@ -34,6 +35,8 @@ public class NewsController {
 
     @Autowired
     private SortByDateUseCase sortByDateUseCase;
+
+    @Autowired SearchByCategoryUseCase searchByCategoryUseCase;
 
     @PreAuthorize("hasRole('EDITOR')")
     @PostMapping
@@ -70,7 +73,14 @@ public class NewsController {
         return ResponseEntity.ok(responseDTOList);
     }
 
-    //rotas publicas----------------------
+    @PreAuthorize("hasRole('EDITOR')")
+    @GetMapping("/category")
+    public ResponseEntity<List<NewsResponseDTO>> getAllByCategory(@RequestBody @Valid CategoryDTO dto) {
+        List<NewsResponseDTO> responseDTOList = searchByCategoryUseCase.execute(dto);
+        return ResponseEntity.ok(responseDTOList);
+    }
+
+    //rotas publicas------------------------------------------------------
 
     @GetMapping("/{newsId}")
     public ResponseEntity<NewsResponseDTO> getById(@PathVariable long newsId) {
