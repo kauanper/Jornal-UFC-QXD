@@ -1,5 +1,6 @@
 package com.example.JornalUFC.shared;
 
+import com.example.JornalUFC.shared.custonExceptions.DuplicateResourceException;
 import com.example.JornalUFC.shared.custonExceptions.ResourceNotFoundException;
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import org.springframework.http.HttpStatus;
@@ -16,6 +17,20 @@ import java.util.stream.Collectors;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
+
+    @ExceptionHandler(DuplicateResourceException.class)
+    public ResponseEntity<ErrorResponseDTO> handleDuplicateResource(
+            DuplicateResourceException ex
+    ) {
+        ErrorResponseDTO error = new ErrorResponseDTO(
+                ex.getField(),
+                ex.getMessage(),
+                ex.getStatus().value(),
+                ex.getStatus().getReasonPhrase()
+        );
+
+        return ResponseEntity.status(ex.getStatus()).body(error);
+    }
 
     @ExceptionHandler(HttpMessageNotReadableException.class)
     public ResponseEntity<ErrorResponseDTO> handleHttpMessageNotReadable(
