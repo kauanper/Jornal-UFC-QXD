@@ -2,10 +2,7 @@ package com.example.JornalUFC.modules.news;
 
 import com.example.JornalUFC.modules.news.dtos.NewsRegisterDTO;
 import com.example.JornalUFC.modules.news.dtos.NewsResponseDTO;
-import com.example.JornalUFC.modules.news.servicies.CraeteNewsUseCase;
-import com.example.JornalUFC.modules.news.servicies.DeleteNewsUseCase;
-import com.example.JornalUFC.modules.news.servicies.GetAllNewsUseCase;
-import com.example.JornalUFC.modules.news.servicies.GetByIdUseCase;
+import com.example.JornalUFC.modules.news.servicies.*;
 import com.example.JornalUFC.modules.user.User;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +29,9 @@ public class NewsController {
     @Autowired
     private DeleteNewsUseCase deleteNewsUseCase;
 
+    @Autowired
+    private UpdateNewsUseCase updateNewsUseCase;
+
     @PreAuthorize("hasRole('EDITOR')")
     @PostMapping
     public ResponseEntity<?> createNews(@RequestBody @Valid NewsRegisterDTO dto,
@@ -47,9 +47,17 @@ public class NewsController {
 
     @PreAuthorize("hasRole('EDITOR')")
     @DeleteMapping("/{newsId}")
-    public ResponseEntity<Void> deleteNews(@PathVariable long newsId) {
+    public ResponseEntity<?> deleteNews(@PathVariable long newsId) {
         deleteNewsUseCase.execute(newsId);
         return ResponseEntity.noContent().build();
+    }
+
+    @PreAuthorize("hasRole('EDITOR')")
+    @PutMapping("/{newsId}")
+    public ResponseEntity<?> updateNews(@PathVariable long newsId,
+                                        @RequestBody @Valid NewsRegisterDTO dto) {
+        NewsResponseDTO responseDTO  = updateNewsUseCase.execute(newsId, dto);
+        return ResponseEntity.ok(responseDTO);
     }
 
     //rotas publicas----------------------
