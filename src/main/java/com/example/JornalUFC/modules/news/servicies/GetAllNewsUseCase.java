@@ -17,7 +17,7 @@ public class GetAllNewsUseCase {
     private NewsRepository newsRepository;
 
     public List<NewsResponseDTO> execute(){
-        List<News> newsList = newsRepository.findAll();
+        List<News> newsList = newsRepository.findAllOrderedByCategory();
         List<NewsResponseDTO> newsResponseDTOList = new ArrayList<>();
         for (News news : newsList) {
             newsResponseDTOList.add(EntityToDto.transform(news));
