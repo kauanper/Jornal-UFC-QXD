@@ -18,8 +18,7 @@ public class SearchByCategoryUseCase {
     @Autowired
     private NewsRepository newsRepository;
 
-    public List<NewsResponseDTO> execute(CategoryDTO dto) {
-        Category category = dto.category();
+    public List<NewsResponseDTO> execute(Category category) {
         List<News> newsList = newsRepository.findByCategoryOrderByDateDesc(category);
         List<NewsResponseDTO> newsResponseDTOList = new ArrayList<>();
         for (News news : newsList) {
