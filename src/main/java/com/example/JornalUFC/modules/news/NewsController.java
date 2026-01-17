@@ -34,6 +34,9 @@ public class NewsController {
     @Autowired
     private UpdateNewsUseCase updateNewsUseCase;
 
+    @Autowired
+    private FilteringUseCase filteringUseCase;
+
 
     @PreAuthorize("hasRole('EDITOR')")
     @PostMapping
@@ -69,7 +72,8 @@ public class NewsController {
             @PathVariable OrderBy order,
             @RequestParam(required = false) Category category
     ) {
-        return ResponseEntity.ok(List.of());
+        List<NewsResponseDTO> responseDTOs = filteringUseCase.execute(category, order);
+        return ResponseEntity.ok(responseDTOs);
     }
 
 
