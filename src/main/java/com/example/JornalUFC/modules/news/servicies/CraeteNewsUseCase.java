@@ -8,6 +8,7 @@ import com.example.JornalUFC.modules.news.mappers.DtoToEntity;
 import com.example.JornalUFC.modules.news.mappers.EntityToDto;
 import com.example.JornalUFC.modules.user.User;
 import com.example.JornalUFC.modules.user.UserRepository;
+import com.example.JornalUFC.shared.custonExceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,7 +24,12 @@ public class CraeteNewsUseCase {
     public NewsResponseDTO execute(long id, NewsRegisterDTO newsRegisterDTO) {
 
         User user = userRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Usuário não encontrado com id: " + id));
+                .orElseThrow(() ->
+                        new ResourceNotFoundException(
+                                "id",
+                                "Notícia não encontrada com id: " + id
+                        )
+                );
 
         String publisherBy = user.getNickname();
 

@@ -3,6 +3,7 @@ package com.example.JornalUFC.modules.news;
 import com.example.JornalUFC.modules.news.dtos.NewsRegisterDTO;
 import com.example.JornalUFC.modules.news.dtos.NewsResponseDTO;
 import com.example.JornalUFC.modules.news.servicies.CraeteNewsUseCase;
+import com.example.JornalUFC.modules.news.servicies.DeleteNewsUseCase;
 import com.example.JornalUFC.modules.news.servicies.GetAllNewsUseCase;
 import com.example.JornalUFC.modules.news.servicies.GetByIdUseCase;
 import com.example.JornalUFC.modules.user.User;
@@ -28,6 +29,9 @@ public class NewsController {
     @Autowired
     private GetAllNewsUseCase getAllNewsUseCase;
 
+    @Autowired
+    private DeleteNewsUseCase deleteNewsUseCase;
+
     @PreAuthorize("hasRole('EDITOR')")
     @PostMapping
     public ResponseEntity<?> createNews(@RequestBody @Valid NewsRegisterDTO dto,
@@ -39,6 +43,13 @@ public class NewsController {
         NewsResponseDTO responseDTO  = craeteNewsUseCase.execute(userId, dto);
 
         return ResponseEntity.ok(responseDTO);
+    }
+
+    @PreAuthorize("hasRole('EDITOR')")
+    @DeleteMapping("/{newsId}")
+    public ResponseEntity<Void> deleteNews(@PathVariable long newsId) {
+        deleteNewsUseCase.execute(newsId);
+        return ResponseEntity.noContent().build();
     }
 
     //rotas publicas----------------------
