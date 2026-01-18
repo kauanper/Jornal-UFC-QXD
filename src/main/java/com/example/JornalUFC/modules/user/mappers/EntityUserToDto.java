@@ -12,7 +12,8 @@ public class EntityUserToDto {
                 user.getNickname(),
                 user.getUsername(),
                 user.getCreatedAt(),
-                user.getRole()
+                user.getRole(),
+                user.getPosts()
         );
     }
 
