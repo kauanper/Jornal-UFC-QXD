@@ -9,5 +9,6 @@ public record ResponseUserDTO(
         String nickname,
         String username, // email
         LocalDateTime createdAt,
-        UserRoles role
+        UserRoles role,
+        Long posts
 ) {}

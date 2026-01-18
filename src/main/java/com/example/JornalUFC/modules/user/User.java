@@ -32,6 +32,9 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     private UserRoles role;
 
+    @Column(nullable = false)
+    private Long posts;
+
     public User() {
     }
 
@@ -41,6 +44,7 @@ public class User implements UserDetails {
         this.password = password;
         this.role = role;
         this.createdAt = LocalDateTime.now();
+        this.posts = 0L;
     }
 
     // UserDetails
@@ -119,4 +123,13 @@ public class User implements UserDetails {
     public String getNickname() {
         return nickname;
     }
+
+    public Long getPosts() {
+        return posts;
+    }
+
+    public void setPosts(Long posts) {
+        this.posts = posts;
+    }
+
 }
