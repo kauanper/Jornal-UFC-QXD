@@ -32,6 +32,8 @@ public class CraeteNewsUseCase {
                 );
 
         String publisherBy = user.getNickname();
+        user.setPosts(user.getPosts() + 1);
+        userRepository.save(user); //atualizar novo valor de post
 
         News news = DtoToEntity.transform(newsRegisterDTO, publisherBy);
 
