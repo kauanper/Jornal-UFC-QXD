@@ -42,6 +42,7 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK).body(editors);
     }
 
+    @PreAuthorize("hasRole('EDITOR')")
     @GetMapping()
     public ResponseEntity<ResponseUserDTO> getUsers(Authentication authentication) {
         User user = (User) authentication.getPrincipal();
