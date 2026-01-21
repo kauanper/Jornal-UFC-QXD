@@ -16,11 +16,19 @@ public class UsersInitializer {
     @Bean
     CommandLineRunner initUsers(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         return args -> {
-            User admin = new User("adm", "admin@email.com", passwordEncoder.encode("admin123"), UserRoles.ADMIN);
-            User editor = new User("ed","editor@email.com", passwordEncoder.encode("editor123"), UserRoles.EDITOR);
-            userRepository.save(admin);
-            userRepository.save(editor);
-            System.out.println("Usuários iniciais criados no H2!");
+            if (!userRepository.existsByUsername("admin@email.com")) {
+                User admin = new User("adm", "admin@email.com", passwordEncoder.encode("admin123"), UserRoles.ADMIN);
+                userRepository.save(admin);
+                System.out.println("Admin user created!");
+            }
+
+            if (!userRepository.existsByUsername("editor@email.com")) {
+                User editor = new User("ed","editor@email.com", passwordEncoder.encode("editor123"), UserRoles.EDITOR);
+                userRepository.save(editor);
+                System.out.println("Editor user created!");
+            }
+            
+            System.out.println("Inicialização de usuários concluída!");
         };
     }
 

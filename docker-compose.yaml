@@ -41,6 +41,8 @@ services:
       - postgres
     networks:
       - journal-network
+    volumes:
+      - pgadmindata-staging:/var/lib/pgadmin
 
 networks:
   journal-network:
